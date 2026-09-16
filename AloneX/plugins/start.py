@@ -1,13 +1,3 @@
-# ━━━━━━━━━━━━━━━━━━━━━━━━━━━
-# ʏ_ꜱʜᴀᴅᴏᴡ_ᴍᴜꜱɪᴄ
-# ᴀᴅᴠᴀɴᴄᴇᴅ ᴍᴜꜱɪᴄ & ᴠɪᴅᴇᴏ ʙᴏᴛ
-# • ᴍᴜꜱɪᴄ • ᴠɪᴅᴇᴏ • ʟɪᴠᴇ
-# • ꜰᴀꜱᴛ • ꜱᴛᴀʙʟᴇ • ꜱᴇᴄᴜʀᴇ
-# ᴅᴇᴠ : ᴇɴᴀꜰᴜʟ
-# ᴠᴇʀ : ᴠ3.0.0
-# Year : 2026
-# ━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
 # =====================================================================
 # Project: X_SHADOW_MUSIC
 # Author: ENAFUL
@@ -34,7 +24,6 @@ async def _help(_, m: types.Message):
     await m.reply_text(
         text=m.lang["help_menu"],
         reply_markup=buttons.help_markup(m.lang),
-        quote=True,
     )
 
 
@@ -48,13 +37,13 @@ async def start(_, message: types.Message):
 
     # --- LOADING ANIMATION SEQUENCE FOR PRIVATE CHAT ---
     if private:
-        loading_1 = await message.reply_text("<b>ᴌᴏᴀᴅɪɴɢ....</b>")
+        loading_1 = await message.reply_text("<b>⚡ ʟᴏᴀᴅɪɴɢ...</b>")
         await asyncio.sleep(0.3)
-        await loading_1.edit_text("<b>ꜱᴛᴀʀᴛɪɴɢ..ʙᴀʙʏ.❤️❤️</b>")
+        await loading_1.edit_text("<b>🚀 ꜱᴛᴀʀᴛɪɴɢ ʙᴏᴛ...</b>")
         await asyncio.sleep(0.3)
-        await loading_1.edit_text("<b>ɪ ᴀᴍ ᴀʟɪᴠᴇ ʙᴀʙʏ❤️😌🫣🫣</b>")
+        await loading_1.edit_text("<b>🔥 ʙᴏᴛ ɪs ᴀʟɪᴠᴇ ɴᴏᴡ!</b>")
         await asyncio.sleep(0.5)
-        await loading_1.edit_text("<b>BETA ʙᴏᴛs🫣🫣.</b>")
+        await loading_1.edit_text("<b>✨ ʙᴏᴛ ʀᴇᴀᴅʏ ✨</b>")
         await asyncio.sleep(0.5)
         await loading_1.delete()
 
@@ -73,13 +62,18 @@ async def start(_, message: types.Message):
 
     key = buttons.start_key(message.lang, private)
     
-    # --- SEND VIDEO BELOW TEXT ---
-    await message.reply_video(
-        video=config.START_VIDEO,  # Make sure START_VIDEO is defined in your config.py
-        caption=_text,
-        reply_markup=key,
-        quote=not private
-    )
+    # --- SEND VIDEO BELOW TEXT (TRY-EXCEPT TO PREVENT CRASH) ---
+    try:
+        await message.reply_video(
+            video=config.START_VIDEO,  # Make sure START_VIDEO is defined in your config.py
+            caption=_text,
+            reply_markup=key
+        )
+    except Exception:
+        await message.reply_text(
+            text=_text,
+            reply_markup=key
+        )
 
     if private:
         if await db.is_user(message.from_user.id):
